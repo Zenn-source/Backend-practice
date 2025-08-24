@@ -4,6 +4,8 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.set('json spaces', 2); // Enables 2-space indentation for all res.json()
+
 
 let tasks = [
   {
@@ -14,8 +16,13 @@ let tasks = [
   {
     id: 2,
     title: "Learn React",
-    completed: false
-  }
+    completed: false,
+  },
+  {
+    id: 3,
+    title: "Learn Tailwind",
+    completed: false,
+  },
 ];
 
 app.get('/', (req, res) => {
@@ -48,6 +55,24 @@ app.post('/tasks', (req, res) => {
   tasks.push(newTask);
 
   res.status(201).json(newTask);
+});
+
+app.put('/tasks/:id' , (req, res) => {
+  const id = parseInt(req.params.id);
+  const { title, completed} = req.body;
+
+  const task = tasks.find(task => task.id === id);
+
+  if (!task) {
+    return res.status(404).json({
+      error: "Task not found"
+    });
+  }
+
+  task.title = title;
+  task.completed = completed;
+  
+  res.json(task);
 });
 
 app.delete('/tasks/:id', (req, res) => {
