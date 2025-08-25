@@ -1,4 +1,5 @@
 import express, { json } from 'express';
+import fs from 'fs';
 
 const app = express();
 const port = 3000;
@@ -7,30 +8,31 @@ app.use(express.json());
 app.set('json spaces', 2); // Enables 2-space indentation for all res.json()
 
 
-let tasks = [
-  {
-    id: 1,
-    title: "Learn Express",
-    completed: false,
-  },
-  {
-    id: 2,
-    title: "Learn React",
-    completed: false,
-  },
-  {
-    id: 3,
-    title: "Learn Tailwind",
-    completed: false,
-  },
-];
+let tasks = [];
+
+if (fs.existsSync("tasks.json")) {
+  const data = fs.readFileSync('tasks.json', 'utf-8');
+  tasks = JSON.parse(data);
+  console.log("✅ Tasks loaded from file");
+}
 
 app.get('/', (req, res) => {
   res.send(`<a href = "/tasks">Press here to view tasks</a>`);
 });
 
 app.get('/tasks', (req, res) => {
-  res.send(tasks);
+  const filter = req.query.completed;
+  
+  if(!filter) {
+    return res.json(tasks);
+  }
+  
+  const filteredTasks = tasks.filter(task => {
+    if (filter === 'true') return task.completed === true;
+    if (filter === "false") return task.completed === false;
+  });
+
+  res.json(filteredTasks);
 });
 
 app.get('/tasks/:id', (req, res) => {
@@ -44,9 +46,24 @@ app.get('/tasks/:id', (req, res) => {
   res.json(task);
 });
 
+app.get('/save', (req, res) => {
+  try {
+    fs.writeFileSync("tasks.json", JSON.stringify(tasks, null, 2));
+  res.send("✅ Tasks saved to tasks.json");
+  } catch {
+    res.status(500).send("Error saving tasks");
+  }
+});
 
 app.post('/tasks', (req, res) => {
   const title = req.body.title;
+  
+  if (!title || title.trim() === "") {
+    return res.status(400).json({
+      error: "Title is required"
+    });
+  }
+
   const newTask = {
     id: tasks.length + 1,
     title,
