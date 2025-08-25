@@ -75,6 +75,38 @@ app.put('/tasks/:id' , (req, res) => {
   res.json(task);
 });
 
+// Dynamic PATCH
+app.patch('/tasks/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const task = tasks.find(task => task.id === id);
+
+  if (!task) {
+    return res.status(404).json({
+      error: "Task not found",
+    });
+  }
+
+  Object.assign(task, req.body);
+
+  res.json(task);
+});
+
+// Specific PATCH route
+app.patch('/tasks/:id/complete', (req, res) => {
+  const id = parseInt(req.params.id);
+  const task = tasks.find(task => task.id === id);
+
+  if (!task) {
+    return res.status(404).json({
+      error: "Task not found"
+    });
+  }
+
+  task.completed = true; // forced to be true
+
+  res.json(task);
+});
+
 app.delete('/tasks/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const task = tasks.findIndex((task) => task.id === id);
