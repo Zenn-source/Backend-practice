@@ -20,20 +20,26 @@ app.get('/', (req, res) => {
   res.send(`<a href = "/tasks">Press here to view tasks</a>`);
 });
 
-app.get('/tasks', (req, res) => {
-  const filter = req.query.completed;
-  
-  if(!filter) {
-    return res.json(tasks);
-  }
-  
-  const filteredTasks = tasks.filter(task => {
-    if (filter === 'true') return task.completed === true;
-    if (filter === "false") return task.completed === false;
-  });
+app.get("/tasks", (req, res) => {
+  const { completed, sort } = req.query;
 
-  res.json(filteredTasks);
+  let result = [...tasks];
+
+  if (completed === "true") {
+    result = result.filter((task) => task.completed === true);
+  } else if (completed === "false") {
+    result = result.filter((task) => task.completed === false);
+  }
+
+  if (sort === "asc") {
+    result.sort((a, b) => a.title.localeCompare(b.title));
+  } else if (sort === "desc") {
+    result.sort((a, b) => b.title.localeCompare(a.title));
+  }
+
+  res.json(result);
 });
+
 
 app.get('/tasks/:id', (req, res) => {
   const id = parseInt(req.params.id);
