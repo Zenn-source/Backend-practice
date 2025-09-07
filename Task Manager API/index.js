@@ -21,6 +21,21 @@ app.get('/', (req, res) => {
 });
 
 app.get("/tasks", (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 5;
+
+  const start = (page - 1) * limit;
+  const end = start + limit;
+
+  const paginatedTasks = tasks.slice(start, end);
+
+  res.json({
+    page,
+    limit,
+    total: tasks.length,
+    tasks: paginatedTasks,
+  });
+  
   const { completed, sort } = req.query;
 
   let result = [...tasks];
