@@ -6,7 +6,8 @@ const port = 3000;
 
 app.use(express.json());
 app.set('json spaces', 2); // Enables 2-space indentation for all res.json()
-
+app.set("view engine", "ejs");
+app.set("views", "./views");
 
 let tasks = [];
 
@@ -21,6 +22,10 @@ app.get('/', (req, res) => {
 });
 
 app.get("/tasks", (req, res) => {
+  res.render("tasks", { tasks });
+});
+
+app.get("/api/tasks", (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 5;
 
@@ -35,7 +40,7 @@ app.get("/tasks", (req, res) => {
     total: tasks.length,
     tasks: paginatedTasks,
   });
-  
+
   const { completed, sort } = req.query;
 
   let result = [...tasks];

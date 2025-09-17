@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tasks</title>
+</head>
+<body>
+  <h1>My Tasks</h1>
+  <ul>
+    <% tasks.forEach(task => { %>
+      <li>
+        <%= task.title %> - <%= task.completed ? "✅ Done" : "❌ Not done" %>
+      </li>
+    <% }) %>
+  </ul>
+</body>
+</html>
