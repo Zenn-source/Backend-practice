@@ -1,0 +1,24 @@
+[
+  {
+    "id": "5f1c7c4e-616c-4cf0-9fba-28b0841e10d9",
+    "title": "Eat at Jollibee",
+    "subject": "Mackenzie",
+    "tags": [
+      "food",
+      "casual"
+    ],
+    "content": "Eat at Saturday lunch 12nn",
+    "createdAt": "2025-09-18T11:45:27.869Z"
+  },
+  {
+    "id": "e01a57bb-28ca-47d9-b181-40f32dc36b2d",
+    "title": "Practice guitar",
+    "subject": "Mackenzie",
+    "tags": [
+      "lifestyle",
+      "entertainment"
+    ],
+    "content": "Practice guitar for an hour",
+    "createdAt": "2025-09-18T11:45:57.789Z"
+  }
+]
