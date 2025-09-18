@@ -1,0 +1,12 @@
+<%- include("partials/header") %>
+<h1><%= note.title %></h1>
+<div class="text-muted mb-2">
+  <%= note.subject || 'No subject' %> | <%= (note.tags || []).join(', ') %>
+</div>
+<p><%- note.content.replace(/\n/g, '<br>') %></p>
+<a class="btn btn-secondary" href="/notes/<%= note.id %>/edit">Edit</a>
+<form method="POST" action="/notes/<%= note.id %>?_method=DELETE" style="display:inline">
+  <button class="btn btn-danger">Delete</button>
+</form>
+<a class="btn btn-link" href="/notes">Back</a>
+<%- include("partials/footer") %>

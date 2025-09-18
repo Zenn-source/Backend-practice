@@ -1,0 +1,31 @@
+<%- include("partials/header") %>
+<h1>All Notes</h1>
+
+<form class="mb-3" method="GET" action="/notes">
+  <div class="input-group">
+    <input type="text" name="q" class="form-control" placeholder="Search..." value="<%= q %>">
+    <button class="btn btn-outline-secondary">Search</button>
+  </div>
+</form>
+
+<ul class="list-group">
+  <% if (notes.length === 0) { %>
+    <li class="list-group-item">No notes yet. <a href="/notes/new">Create one</a>.</li>
+  <% } %>
+  <% notes.forEach(note => { %>
+    <li class="list-group-item d-flex justify-content-between">
+      <div>
+        <a href="/notes/<%= note.id %>"><strong><%= note.title %></strong></a>
+        <div class="small text-muted"><%= note.subject || 'No subject' %> | <%= (note.tags || []).join(', ') %></div>
+      </div>
+      <div>
+        <a class="btn btn-sm btn-secondary" href="/notes/<%= note.id %>/edit">Edit</a>
+        <form method="POST" action="/notes/<%= note.id %>?_method=DELETE" style="display:inline">
+          <button class="btn btn-sm btn-danger">Delete</button>
+        </form>
+      </div>
+    </li>
+  <% }) %>
+</ul>
+
+<%- include("partials/footer") %>
