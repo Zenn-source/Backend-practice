@@ -4,6 +4,8 @@ import { fileURLToPath } from "url";
 import fs from "fs/promises";
 import { v4 as uuidv4} from "uuid";
 import methodOverride from "method-override";
+import session from "express-session";
+import flash from "connect-flash";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -34,6 +36,29 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use(
+  session({
+    name: "study.sid",
+    secret: process.env.SESSION_SECRET || "change_this_in_prod",
+    resave: false,
+    saveUninitialized: false, // set to false to avoid creating sessions for anonymous visitors
+    cookie: {
+      httpOnly: true,
+      secure: false, // set true when using HTTPS in production
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+    },
+  })
+);
+
+app.use(flash());
+
+// Make flash arrays available in all templates via res.locals
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success"); // array
+  res.locals.error = req.flash("error"); // array
+  next();
+});
 
 // Routes
 app.get("/", (req, res) => res.redirect("/notes"));
@@ -84,6 +109,7 @@ app.post("/notes", async (req, res, next) => {
     const notes = await readNotes();
     notes.push(note);
     await writeNotes(notes);
+    req.flash("success", "Note created successfully.");
     res.redirect(`/notes/${note.id}`);
   } catch (err) {
     next(err);

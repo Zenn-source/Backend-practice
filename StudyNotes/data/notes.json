@@ -20,5 +20,16 @@
     ],
     "content": "Practice guitar for an hour",
     "createdAt": "2025-09-18T11:45:57.789Z"
+  },
+  {
+    "id": "e27bfb7a-ca3f-434b-8a25-56ce17f788fd",
+    "title": "Eat at KFC",
+    "subject": "food",
+    "tags": [
+      "food",
+      "lifestyle"
+    ],
+    "content": "",
+    "createdAt": "2025-09-22T13:23:28.585Z"
   }
 ]
