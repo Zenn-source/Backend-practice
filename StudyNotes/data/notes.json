@@ -20,27 +20,5 @@
     ],
     "content": "Practice guitar for an hour",
     "createdAt": "2025-09-18T11:45:57.789Z"
-  },
-  {
-    "id": "e27bfb7a-ca3f-434b-8a25-56ce17f788fd",
-    "title": "Eat at KFC",
-    "subject": "food",
-    "tags": [
-      "food",
-      "lifestyle"
-    ],
-    "content": "",
-    "createdAt": "2025-09-22T13:23:28.585Z"
-  },
-  {
-    "id": "72948e23-47d4-4d31-9aa3-a9b04c0553a8",
-    "title": "Learn React JS",
-    "subject": "Programming",
-    "tags": [
-      "programming",
-      "study"
-    ],
-    "content": "",
-    "createdAt": "2025-09-23T14:01:41.442Z"
   }
 ]
