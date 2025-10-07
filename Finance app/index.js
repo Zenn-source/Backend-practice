@@ -31,7 +31,6 @@ app.get("/time", (req, res) => {
   res.render("time.ejs", { title: "Real-Time Clock" });
 });
 
-// 🟢 API route (sends live time data as JSON)
 app.get("/api/time", (req, res) => {
   const now = new Date();
   res.json({
