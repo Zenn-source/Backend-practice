@@ -2,7 +2,7 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs/promises";
-import { v4 as uuidv4} from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import methodOverride from "method-override";
 import session from "express-session";
 import flash from "connect-flash";
