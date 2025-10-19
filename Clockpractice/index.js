@@ -44,5 +44,3 @@ app.listen(port, (req, res) => {
   console.log(`Server is online on http://localhost:${3000}`);
 });
 
-
-// SAVE ME pls haha
